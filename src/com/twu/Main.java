@@ -1,6 +1,7 @@
 package com.twu;
 
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -8,7 +9,7 @@ public class Main {
     public static void main(String[] args) {
         boolean mainMenuFlg=true; // 主菜单界面状态标志位
         boolean userMenuFlg=true; // 用户界面状态标志位
-        boolean admiMenuFlg=true; // 管理员界面状态标志位
+        boolean adminMenuFlgMenuFlg =true; // 管理员界面状态标志位
         HotSearch hot_search=new HotSearch(); // 实例化一个热搜对象
         int selectNum=0;
         //String codeNum="admin123"; // 管理员密码
@@ -50,12 +51,16 @@ public class Main {
                                 }
                                 System.out.println("请输入你要投票的热搜名：");
                                 String str_name=input.next();
-                                boolean non_exit_flg=true; // 检验被投票热搜是否存在的标志位
+                                /*boolean non_exit_flg=true; // 检验被投票热搜是否存在的标志位
                                 for(HotSearchContent hs:hot_search.hotSearchList) {
                                     if(str_name.equals(hs.item_name)) // 在热搜列表中匹配该热搜名
                                         non_exit_flg=false;
                                 }
                                 if(non_exit_flg) { // 投票热搜不存在
+                                    System.out.println("该热搜不在榜单中，投票失败！\n");
+                                    break;
+                                }*/
+                                if(checkHotSearchNonExistence(str_name,hot_search.hotSearchList)) { // 检验该热搜是否存在
                                     System.out.println("该热搜不在榜单中，投票失败！\n");
                                     break;
                                 }
@@ -69,7 +74,21 @@ public class Main {
                                     System.out.println("投票无效！请在剩余票数范围内投票！\n");
                                 break;
                             case 3:  // 购买热搜
-                                System.out.println("该功能尚未完成！\n");
+                                if(hot_search.hotSearchList.isEmpty()) {
+                                    System.out.println("暂无热搜榜单！无法购买！\n");
+                                    break;
+                                }
+                                System.out.println("请输入你要购买的热搜名：");
+                                String name_buy=input.next();
+                                if(checkHotSearchNonExistence(name_buy,hot_search.hotSearchList)) { // 检验该热搜是否存
+                                    System.out.println("该热搜不存在！无法购买！\n");
+                                    break;
+                                }
+                                System.out.println("请输入拟购买的热搜位置：");
+                                int pos=input.nextInt();  // 拟购买位置
+                                System.out.println("请输入拟购买的金额：");
+                                int money=input.nextInt();  // 拟购买金额
+                                hot_search.buy_Search(name_buy,pos,money); // 购买热搜
                                 break;
                             case 4:  // 添加热搜
                                 System.out.println("请输入你要添加的热搜名称：");
@@ -83,14 +102,14 @@ public class Main {
                     }
                     break;
                 case 2: // 选择管理员
-                    admiMenuFlg=true;
+                    adminMenuFlgMenuFlg =true;
                     System.out.println("请输入你的昵称：");
                     String name2=input.next();
                     System.out.println("请输入管理员密码：");
                     String code1=input.next();
                     Administrators admin=new Administrators(); // 实例化管理员对象
                     if(admin.testifyCodeNum(name2,code1)) { // 验证管理员身份及密码：身份密码// 正确
-                        while (admiMenuFlg) {
+                        while (adminMenuFlgMenuFlg) {
                             System.out.println("你好，管理员"+name2+"，你可以选择：\n1. 查看热搜排行榜\n2. 添加热搜" +
                                     "\n3. 添加超级热搜\n4. 退出");
                             selectNum=input.nextInt(); // 选择操作序号
@@ -113,7 +132,7 @@ public class Main {
                                     hot_search.addHotSearch_Super(super_str);
                                     break;
                                 case 4:
-                                    admiMenuFlg=false; // 关闭管理员选择界面
+                                    adminMenuFlgMenuFlg =false; // 关闭管理员选择界面
                                     break;
                             }
                         }
@@ -121,7 +140,7 @@ public class Main {
                     else { // 身份密码验证失败
                         System.out.println("密码验证失败！您的权限被拒绝！\n");
                     }
-                    admiMenuFlg=false; // 关闭管理员选择界面
+                    adminMenuFlgMenuFlg =false; // 关闭管理员选择界面
                     break;
                 case 3: // 退出主界面
                     mainMenuFlg=false;
@@ -130,6 +149,16 @@ public class Main {
             }
 
         }
+    }
+
+    /*检验热搜在榜单中是否存在（不存在返回true）*/
+    public static boolean checkHotSearchNonExistence(String checkname, ArrayList<HotSearchContent> hotSearchList) {
+        boolean non_exit_flg=true; // 检验被投票热搜是否存在的标志位
+        for(HotSearchContent hs:hotSearchList) {
+            if(checkname.equals(hs.item_name)) // 在热搜列表中匹配该热搜名
+                non_exit_flg=false;
+        }
+        return non_exit_flg;
     }
 
 }
