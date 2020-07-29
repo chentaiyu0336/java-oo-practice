@@ -19,7 +19,7 @@ public class Main {
             System.out.println("欢迎来到热搜排行榜，你是？\n1. 用户\n2. 管理员\n3. 退出");
             selectNum=input.nextInt(); // 选择操作序号
             if(selectNum>3||selectNum<1) {
-                System.out.println("输入无效，请输入0~3序号进行选择！\n");
+                System.out.println("Warning：输入无效，请输入0~3序号进行选择！\n");
                 continue;
             }
             switch (selectNum) {
@@ -33,7 +33,7 @@ public class Main {
                                 "\n3. 购买热搜\n4. 添加热搜\n5. 退出");
                         selectNum=input.nextInt(); // 选择操作序号
                         if(selectNum>5||selectNum<1) {
-                            System.out.println("输入无效，请输入0~5序号进行选择！\n");
+                            System.out.println("Warning：输入无效，请输入0~5序号进行选择！\n");
                             continue;
                         }
                         switch (selectNum) {
@@ -42,11 +42,11 @@ public class Main {
                                 break;
                             case 2:  // 给热搜投票
                                 if(hot_search.hotSearchList.isEmpty()) {
-                                    System.out.println("暂无热搜榜单！无法投票！\n");
+                                    System.out.println("Warning：暂无热搜榜单！无法投票！\n");
                                     break;
                                 }
                                 if(user.votNum==0) {
-                                    System.out.println("你的票数已用完！无法投票！\n");
+                                    System.out.println("Warning：你的票数已用完！无法投票！\n");
                                     break;
                                 }
                                 System.out.println("请输入你要投票的热搜名：");
@@ -61,7 +61,7 @@ public class Main {
                                     break;
                                 }*/
                                 if(checkHotSearchNonExistence(str_name,hot_search.hotSearchList)) { // 检验该热搜是否存在
-                                    System.out.println("该热搜不在榜单中，投票失败！\n");
+                                    System.out.println("Warning：该热搜不在榜单中，投票失败！\n");
                                     break;
                                 }
                                 System.out.println("请输入你要投的票数：(当前还有"+user.votNum+"票)");
@@ -71,17 +71,17 @@ public class Main {
                                     user.votNum-=count1;
                                 }
                                 else
-                                    System.out.println("投票无效！请在剩余票数范围内投票！\n");
+                                    System.out.println("Warning：投票无效！请在剩余票数范围内投票！\n");
                                 break;
                             case 3:  // 购买热搜
                                 if(hot_search.hotSearchList.isEmpty()) {
-                                    System.out.println("暂无热搜榜单！无法购买！\n");
+                                    System.out.println("Warning：暂无热搜榜单！无法购买！\n");
                                     break;
                                 }
                                 System.out.println("请输入你要购买的热搜名：");
                                 String name_buy=input.next();
                                 if(checkHotSearchNonExistence(name_buy,hot_search.hotSearchList)) { // 检验该热搜是否存
-                                    System.out.println("该热搜不存在！无法购买！\n");
+                                    System.out.println("Warning：该热搜不存在！无法购买！\n");
                                     break;
                                 }
                                 System.out.println("请输入拟购买的热搜位置：");
@@ -114,7 +114,7 @@ public class Main {
                                     "\n3. 添加超级热搜\n4. 退出");
                             selectNum=input.nextInt(); // 选择操作序号
                             if(selectNum>4||selectNum<1) {
-                                System.out.println("输入无效，请输入0~4序号进行选择！\n");
+                                System.out.println("Warning：输入无效，请输入0~4序号进行选择！\n");
                                 continue;
                             }
                             switch (selectNum) {
@@ -138,7 +138,7 @@ public class Main {
                         }
                     }
                     else { // 身份密码验证失败
-                        System.out.println("密码验证失败！您的权限被拒绝！\n");
+                        System.out.println("Warning：身份密码验证失败！您的权限被拒绝！\n");
                     }
                     adminMenuFlgMenuFlg =false; // 关闭管理员选择界面
                     break;
